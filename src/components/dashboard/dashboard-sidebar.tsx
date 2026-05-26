@@ -1,5 +1,5 @@
 "use client";
-
+import Image from "next/image";
 import * as React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -185,23 +185,27 @@ export function DashboardSidebar() {
         )}
       >
         {/* ── Logo / Brand ─────────────────────────────────────────────────── */}
-        <div
-          className={cn(
-            "flex h-14 shrink-0 items-center border-b border-white/[0.06]",
-            collapsed ? "justify-center px-0" : "gap-2.5 px-4"
-          )}
-        >
-          {/* Icon mark */}
-          <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-2xl bg-white text-black shadow-xl">
-           <Zap size={16} strokeWidth={2.5} />
-          </div>
+        <div className="flex items-center gap-3 px-2">
+  <Image
+    src="/logo.png"
+    alt="EVENTORA"
+    width={42}
+    height={42}
+    className="rounded-xl"
+  />
 
-          {!collapsed && (
-            <span className="text-[15px] font-semibold tracking-tight text-white">
-              EVENTORA
-            </span>
-          )}
-        </div>
+  {!collapsed && (
+    <div>
+      <h1 className="text-lg font-bold tracking-wide">
+        EVENTORA
+      </h1>
+
+      <p className="text-xs text-zinc-500">
+        Event Ecosystem
+      </p>
+    </div>
+  )}
+</div>
 
         {/* ── Main navigation ───────────────────────────────────────────────── */}
         <nav
