@@ -94,7 +94,7 @@ http://localhost:3000
 ## Deployment
 
 Live Project:
-https://eventspear-three-beige.vercel.app/
+https://eventora-three-beige.vercel.app/
 
 ---
 
