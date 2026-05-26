@@ -1,84 +1,100 @@
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
+"use client";
 
-const volunteerTeams = [
-  {
-    team: "Registration Team",
-    lead: "Aaliya",
-    members: 18,
-    tasks: "Manage attendee check-in",
-  },
-  {
-    team: "Technical Team",
-    lead: "Rahul",
-    members: 12,
-    tasks: "Handle AV & live sessions",
-  },
-  {
-    team: "Design Team",
-    lead: "Sneha",
-    members: 8,
-    tasks: "Social media & creatives",
-  },
-  {
-    team: "Logistics Team",
-    lead: "Arjun",
-    members: 15,
-    tasks: "Venue & coordination",
-  },
-];
+import { useEffect, useState } from "react";
 
-export default function VolunteerPage() {
+import { supabase } from "@/lib/supabase";
+
+export default function VolunteersPage() {
+  const [volunteers, setVolunteers] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchVolunteers();
+  }, []);
+
+  const fetchVolunteers = async () => {
+    const { data, error } = await supabase
+      .from("volunteers")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    setVolunteers(data || []);
+  };
+
   return (
-    <div className="min-h-screen bg-black text-white p-6">
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold">
+    <main className="min-h-screen bg-[#050505] text-white px-6 py-10">
+      <div className="container-width">
+        <h1 className="text-5xl font-bold gradient-text">
           Volunteer Management
         </h1>
 
-        <p className="text-zinc-400 mt-2">
-          Manage volunteer hierarchy, task allocation and team coordination.
+        <p className="text-zinc-400 mt-5 text-lg">
+          Manage volunteers and applications across events.
         </p>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {volunteerTeams.map((team) => (
-          <Card
-            key={team.team}
-            className="bg-zinc-900 border-zinc-800"
-          >
-            <CardContent className="p-6">
-              <div className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-semibold">
-                  {team.team}
-                </h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-14">
+          {volunteers.map((volunteer) => (
+            <div
+              key={volunteer.id}
+              className="glass-card rounded-[32px] p-8"
+            >
+              <div className="flex items-center justify-between">
+                <div>
+                  <h2 className="text-3xl font-semibold">
+                    {volunteer.name}
+                  </h2>
 
-                <Badge>
-                  {team.members} Members
-                </Badge>
+                  <p className="text-zinc-400 mt-2">
+                    {volunteer.email}
+                  </p>
+                </div>
+
+                <div className="rounded-2xl bg-violet-500/20 text-violet-400 px-4 py-2 text-sm">
+                  Applicant
+                </div>
               </div>
 
-              <div className="space-y-3">
+              <div className="mt-8 space-y-4">
                 <div>
                   <p className="text-zinc-500 text-sm">
-                    Team Lead
+                    Skills
                   </p>
 
-                  <h3>{team.lead}</h3>
+                  <h3 className="mt-1">
+                    {volunteer.skills}
+                  </h3>
                 </div>
 
                 <div>
                   <p className="text-zinc-500 text-sm">
-                    Responsibilities
+                    Applied Event
                   </p>
 
-                  <h3>{team.tasks}</h3>
+                  <h3 className="mt-1">
+                    {volunteer.event_title}
+                  </h3>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        ))}
+            </div>
+          ))}
+        </div>
+
+        {volunteers.length === 0 && (
+          <div className="glass-card rounded-[32px] p-12 text-center mt-14">
+            <h2 className="text-3xl font-semibold">
+              No Volunteers Yet
+            </h2>
+
+            <p className="text-zinc-400 mt-4">
+              Volunteer applications will appear here.
+            </p>
+          </div>
+        )}
       </div>
-    </div>
+    </main>
   );
 }

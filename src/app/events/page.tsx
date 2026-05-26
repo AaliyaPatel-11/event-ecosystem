@@ -1,33 +1,31 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import Link from "next/link";
 
-const events = [
-  {
-    id: 1,
-    title: "GDG DevFest 2026",
-    description:
-      "A large-scale developer conference focused on AI, Web and Cloud.",
-    date: "26 May 2026",
-    venue: "Hyderabad",
-  },
-  {
-    id: 2,
-    title: "Hackathon Nexus",
-    description:
-      "24-hour innovation challenge for student developers.",
-    date: "12 June 2026",
-    venue: "Bangalore",
-  },
-  {
-    id: 3,
-    title: "AI/ML Workshop",
-    description:
-      "Hands-on workshop exploring modern AI technologies.",
-    date: "2 June 2026",
-    venue: "Online",
-  },
-];
+import { supabase } from "@/lib/supabase";
 
 export default function EventsPage() {
+  const [events, setEvents] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchEvents();
+  }, []);
+
+  const fetchEvents = async () => {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    setEvents(data || []);
+  };
+
   return (
     <main className="min-h-screen bg-[#050505] text-white px-6 py-10">
       <div className="container-width">
@@ -72,6 +70,18 @@ export default function EventsPage() {
             </div>
           ))}
         </div>
+
+        {events.length === 0 && (
+          <div className="glass-card rounded-3xl p-10 text-center mt-14">
+            <h2 className="text-2xl font-semibold mb-3">
+              No Events Yet
+            </h2>
+
+            <p className="text-zinc-400">
+              Events created by organizers will appear here.
+            </p>
+          </div>
+        )}
       </div>
     </main>
   );

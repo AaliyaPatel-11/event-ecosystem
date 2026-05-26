@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { supabase } from "@/lib/supabase";
 
 export default function CreateEventPage() {
   const [formData, setFormData] = useState({
@@ -22,8 +23,30 @@ export default function CreateEventPage() {
     });
   };
 
-  const handleSubmit = () => {
-    alert("Event Created Successfully!");
+  const handleSubmit = async () => {
+    const { error } = await supabase
+      .from("events")
+      .insert([
+        {
+          title: formData.title,
+          venue: formData.venue,
+          date: formData.date,
+          description: formData.description,
+        }
+      ]);
+
+      if (error) {
+        console.log(error);
+        alert("Error creating event.");
+        return;
+      }
+      alert("Event created successfully!");
+      setFormData({
+        title: "",
+        venue: "",
+        date: "",
+        description: "",
+      });
   };
 
   return (

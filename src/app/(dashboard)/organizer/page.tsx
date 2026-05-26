@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { supabase } from "@/lib/supabase";
+
 import {
   CalendarDays,
   Users,
@@ -33,28 +38,28 @@ const stats = [
   },
 ];
 
-const events = [
-  {
-    name: "GDG DevFest 2026",
-    date: "26 May 2026",
-    venue: "Hyderabad",
-    registrations: 420,
-  },
-  {
-    name: "AI/ML Workshop",
-    date: "2 June 2026",
-    venue: "Online",
-    registrations: 210,
-  },
-  {
-    name: "Hackathon Nexus",
-    date: "12 June 2026",
-    venue: "Bangalore",
-    registrations: 680,
-  },
-];
 
 export default function OrganizerPage() {
+   const [events, setEvents] = useState<any[]>([]);
+
+   useEffect(() => {
+    fetchEvents();
+   }, []);
+
+   const fetchEvents = async () => {
+     const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+       if (error) {
+         console.log(error);
+         return;
+        }
+
+       setEvents(data || []);
+    };
+
   return (
     <div className="min-h-screen bg-[#050505] text-white px-8 py-8">
       <div className="container-width">
@@ -126,12 +131,12 @@ export default function OrganizerPage() {
           <div className="space-y-4">
             {events.map((event) => (
               <div
-                key={event.name}
+                key={event.title}
                 className="flex items-center justify-between bg-zinc-800/40 border border-zinc-800 rounded-xl p-4"
               >
                 <div>
                   <h3 className="font-medium">
-                    {event.name}
+                    {event.title}
                   </h3>
 
                   <p className="text-sm text-zinc-400 mt-1">
@@ -141,7 +146,7 @@ export default function OrganizerPage() {
 
                 <div className="text-right">
                   <p className="font-semibold">
-                    {event.registrations}
+                    {Math.floor(Math.random() * 500) + 100}
                   </p>
 
                   <p className="text-sm text-zinc-400">

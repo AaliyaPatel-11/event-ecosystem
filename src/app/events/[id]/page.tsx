@@ -1,9 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useParams } from "next/navigation";
+import Link from "next/link";
+
+import { supabase } from "@/lib/supabase";
 
 export default function EventDetailsPage() {
+  const params = useParams();
+
+  const [event, setEvent] = useState<any>(null);
   const [registered, setRegistered] = useState(false);
+  const [formData, setFormData] = useState({
+    full_name: "",
+    email: "",
+    organization: "",
+  });
+
+  useEffect(() => {
+    fetchEvent();
+  }, []);
+
+  const fetchEvent = async () => {
+    const { data, error } = await supabase
+      .from("events")
+      .select("*")
+      .eq("id", params.id)
+      .single();
+
+    if (error) {
+      console.log(error);
+      return;
+    }
+
+    setEvent(data);
+  };
+
+  if (!event) {
+    return (
+      <main className="min-h-screen bg-[#050505] text-white flex items-center justify-center">
+        Loading Event...
+      </main>
+    );
+  }
 
   if (registered) {
     return (
@@ -21,18 +60,10 @@ export default function EventDetailsPage() {
 
           <div className="bg-white rounded-2xl p-6 flex items-center justify-center mb-6">
             <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=EventOS-Ticket"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=EventSphere-Ticket"
               alt="QR Code"
             />
           </div>
-
-          <a
-            href="/participant-dashboard"
-            className="mt-8 inline-block rounded-2xl bg-white text-black px-6 py-4 font-medium hover:bg-zinc-200 transition"
-          >
-            Go To Dashboard
-          </a>
-
 
           <div className="text-left space-y-3">
             <div>
@@ -41,7 +72,7 @@ export default function EventDetailsPage() {
               </p>
 
               <h2 className="font-semibold">
-                GDG DevFest 2026
+                {event.title}
               </h2>
             </div>
 
@@ -51,10 +82,17 @@ export default function EventDetailsPage() {
               </p>
 
               <h2 className="font-semibold">
-                EVT-2026-8452
+                EVT-{event.id}-2026
               </h2>
             </div>
           </div>
+
+          <Link
+            href="/participant-dashboard"
+            className="mt-8 inline-block rounded-2xl bg-white text-black px-6 py-4 font-medium hover:bg-zinc-200 transition"
+          >
+            Go To Dashboard
+          </Link>
         </div>
       </main>
     );
@@ -65,17 +103,15 @@ export default function EventDetailsPage() {
       <div className="container-width max-w-4xl">
         <div className="glass-card rounded-[32px] p-10">
           <div className="text-sm text-zinc-500 mb-4">
-            26 May 2026 • Hyderabad
+            {event.date} • {event.venue}
           </div>
 
           <h1 className="text-5xl font-bold gradient-text">
-            GDG DevFest 2026
+            {event.title}
           </h1>
 
           <p className="text-zinc-400 text-lg leading-relaxed mt-8">
-            Join developers, designers and innovators for a large-scale
-            technology event focused on AI, cloud computing and modern web
-            technologies.
+            {event.description}
           </p>
 
           <div className="mt-14">
@@ -87,20 +123,47 @@ export default function EventDetailsPage() {
               <input
                 placeholder="Full Name"
                 className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none"
+                value={formData.full_name}
+                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+                
               />
 
               <input
                 placeholder="Email Address"
                 className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none"
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
               />
 
               <input
                 placeholder="College / Organization"
+                value={formData.organization}
+                onChange={(e) => setFormData({ ...formData, organization: e.target.value })}
                 className="w-full rounded-2xl border border-white/10 bg-white/5 px-5 py-4 outline-none"
               />
 
               <button
-                onClick={() => setRegistered(true)}
+                onClick={async () => {
+                  const { error } = await supabase
+                    .from("registrations")
+                    .insert([
+                      {
+                        full_name: formData.full_name,
+                        email: formData.email,
+                        organization: formData.organization,
+                        event_title: event.title,
+                      },
+                    ]);
+
+                  if (error) {
+                    console.log(error);
+                    alert("Registration Failed");
+                    return;
+                  }
+
+                  alert("Registration Successful!");
+                  setRegistered(true);
+                }}
                 className="rounded-2xl bg-white text-black px-8 py-4 font-medium hover:bg-zinc-200 transition"
               >
                 Register Now
