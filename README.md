@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# EventSphere
 
-## Getting Started
+EventSphere is a modern Event Ecosystem Platform designed to simplify event management for organizers, participants, sponsors, and volunteers through one unified system.
 
-First, run the development server:
+## Problem Statement
+
+Managing large-scale events often leads to:
+
+* Poor volunteer coordination
+* Confusing participant communication
+* Difficulty handling sponsors
+* Lack of centralized event operations
+
+EventSphere solves these challenges by creating a multi-role event ecosystem platform.
+
+---
+
+## Features Implemented
+
+### Organizer Module
+
+* Organizer dashboard
+* Create and manage events
+* Event analytics overview
+* Registration management
+* Volunteer management
+* Sponsor management
+* Announcements and certificates pages
+
+### Participant Module
+
+* Browse events
+* Register for events
+* QR-based ticket generation
+* Participant dashboard
+
+### Sponsor Module
+
+* Browse sponsorable events
+* Sponsor dashboard
+
+### Volunteer Module
+
+* Volunteer dashboard
+* Volunteer team management
+
+---
+
+## Tech Stack
+
+* Next.js
+* TypeScript
+* Tailwind CSS
+* shadcn/ui
+* Supabase
+* Vercel
+
+---
+
+## Project Flow
+
+Homepage → Role Selection → Login/Signup → Role-based Dashboards → Event Registration → QR Ticket Generation
+
+---
+
+## Setup Instructions
+
+1. Clone the repository
+
+```bash
+git clone https://github.com/AaliyaPatel-11/event-ecosystem.git
+```
+
+2. Install dependencies
+
+```bash
+npm install
+```
+
+3. Run the development server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+4. Open in browser
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```bash
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## Deployment
 
-To learn more about Next.js, take a look at the following resources:
+Live Project:
+https://eventsphere-three-beige.vercel.app/
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Developed By
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Patel Aaliya Mubashira
