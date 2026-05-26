@@ -198,7 +198,7 @@ export function DashboardSidebar() {
 
           {!collapsed && (
             <span className="text-[15px] font-semibold tracking-tight text-white">
-              EventSphere
+              EVENTORA
             </span>
           )}
         </div>

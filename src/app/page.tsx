@@ -18,7 +18,7 @@ export default function HomePage() {
 
              <div className="flex flex-col leading-none">
                <span className="text-lg font-semibold tracking-tight text-white">
-                 EventSphere
+                 EVENTORA
                </span>
 
              </div>

@@ -1,6 +1,6 @@
-# EventSphere
+# EVENTORA
 
-EventSphere is a modern Event Ecosystem Platform designed to simplify event management for organizers, participants, sponsors, and volunteers through one unified system.
+EVENTORA is a modern Event Ecosystem Platform designed to simplify event management for organizers, participants, sponsors, and volunteers through one unified system.
 
 ## Problem Statement
 
@@ -11,7 +11,7 @@ Managing large-scale events often leads to:
 * Difficulty handling sponsors
 * Lack of centralized event operations
 
-EventSphere solves these challenges by creating a multi-role event ecosystem platform.
+EVENTORA solves these challenges by creating a multi-role event ecosystem platform.
 
 ---
 
@@ -94,7 +94,7 @@ http://localhost:3000
 ## Deployment
 
 Live Project:
-https://eventsphere-three-beige.vercel.app/
+https://eventspear-three-beige.vercel.app/
 
 ---
 

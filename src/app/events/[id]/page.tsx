@@ -60,7 +60,7 @@ export default function EventDetailsPage() {
 
           <div className="bg-white rounded-2xl p-6 flex items-center justify-center mb-6">
             <img
-              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=EventSphere-Ticket"
+              src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=EVENTORA-Ticket"
               alt="QR Code"
             />
           </div>
